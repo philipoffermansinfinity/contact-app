@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: kupido-db
+  name: kupido-db
+  namespace: db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kupido-db
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: kupido-db
+    spec:
+      containers:
+      - image: postgres:15
+        name: postgres
+        resources: {}
+        env:
+          - name: POSTGRES_DB
+            valueFrom:
+              configMapKeyRef:
+                name: kupido-db-cm1
+                key: db
+          - name: POSTGRES_USER
+            valueFrom:
+              secretKeyRef:
+                name: kupido-db-s1
+                key: user
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: kupido-db-s1
+                key: password
+        volumeMounts:
+        - mountPath: "/var/lib/postgresql/data"
+          name: dbvolume
+      volumes:
+      - name: dbvolume
+        persistentVolumeClaim:
+          claimName: kupido-db-pvc1
+status: {}

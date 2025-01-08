@@ -1,0 +1,8 @@
+apiVersion: v1
+data:
+  db: contacts
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: kupido-db-cm1
+  namespace: db
