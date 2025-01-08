@@ -1,0 +1,10 @@
+apiVersion: v1
+data:
+  host: kupido-db.db.svc.cluster.local
+  port: '5432'
+  db_name: contacts
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: kupido-backend-cm1
+  namespace: backend

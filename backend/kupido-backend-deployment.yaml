@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: kupido-backend
+  name: kupido-backend
+  namespace: backend
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: kupido-backend
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: kupido-backend
+    spec:
+      containers:
+      - image: philipoffermansinfinity/backend
+        name: backend
+        resources: {}
+        env:
+          - name: DB_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: kupido-backend-cm1
+                key: host
+          - name: DB_PORT
+            valueFrom:
+              configMapKeyRef:
+                name: kupido-backend-cm1
+                key: port
+          - name: DB_NAME
+            valueFrom:
+              configMapKeyRef:
+                name: kupido-backend-cm1
+                key: db_name
+          - name: DB_USER
+            valueFrom:
+              secretKeyRef:
+                name: kupido-backend-s1 
+                key: user
+          - name: DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: kupido-backend-s1 
+                key: password
+status: {}
